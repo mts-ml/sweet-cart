@@ -74,12 +74,14 @@ export default function Item(props) {
                <button className={classname}>
                   <div>
                      <img
+                     className='product__count_img'
                         src={decrement}
                         alt="Icon of '-' representing decrement."
                         onClick={() => decrementCount(itemInCart)}
                      />
                      {itemInCart.quantity}
                      <img
+                     className='product__count_img'
                         src={increment}
                         alt="Icon of '+' representing increment."
                         onClick={() => incrementCount(itemInCart)}
