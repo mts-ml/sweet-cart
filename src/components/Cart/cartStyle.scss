@@ -225,6 +225,8 @@ hr {
    visibility: hidden;
    opacity: 0;
    width: 100%;
+   max-height: 80%;
+   overflow: auto;
    transition: opacity 500ms ease-in-out,
       visibility 500ms ease;
    max-width: px-to-rem(1000);
