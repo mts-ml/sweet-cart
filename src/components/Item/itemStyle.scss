@@ -67,11 +67,11 @@ picture {
    font-weight: 600;
    font-size: px-to-rem(14);
    cursor: pointer;
-   transition: background-color .5s ease-in-out;
+   transition: color .3s ease-in-out;
 
    &:hover {
-      background-color: $Rose-300;
-      transition: background-color .5s ease-in-out;
+      color: $Red;
+      transition: color .3s ease-in-out;
    }
 }
 
@@ -110,6 +110,15 @@ picture {
       border-radius: 50%;
       padding: px-to-rem(3);
       cursor: pointer;
+   }
+}
+
+.product__count_img {
+   transition: transform .3s ease-in-out;
+   
+   &:hover {
+      transform: scale(1.2);
+      transition: transform .3s ease-in-out;
    }
 }
 
