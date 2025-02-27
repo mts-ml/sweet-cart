@@ -7,14 +7,37 @@ import { nanoid } from 'nanoid'
 import './styles/globalStyle.scss'
 
 
+interface Image {
+  thumbnail: string
+  mobile: string
+  tablet: string
+  desktop: string
+}
+
+interface Product {
+  image: Image
+  name: string
+  category: string
+  price: number
+}
+
+interface ProductOnCart extends Product {
+  id: string
+  quantity: number
+}
+
+
 function App() {
-  const [cart, setCart] = useState([])
+  const dataApi: Product[] = data
+
+  const [cart, setCart] = useState<ProductOnCart[]>([])
 
   // Added an id to every product and passed props using spread {...productWithId}
-  const products = data.map(product => {
-    const productWithId = {
+  const products = dataApi.map( (product: Product): JSX.Element => {
+    const productWithId: ProductOnCart = {
       ...product,
-      id: nanoid()
+      id: nanoid(),
+      quantity: 1,
     }
     return (
       <Item
@@ -27,21 +50,21 @@ function App() {
     )
   })
 
-  function addToCart(item) {
+  function addToCart(item: ProductOnCart): void {
     // previousState - the entire array
     //  cartItem - every object inside the array
-    setCart(previousState => {
-      const itemInCart = previousState.find(object => object.name === item.name)
+    setCart( (previousState: ProductOnCart[]) => {
+      const itemInCart: ProductOnCart | undefined = previousState.find( (object: ProductOnCart) => object.name === item.name)
 
       if (itemInCart) {
         // If item already inside cart, increase quantity count by 1.
         return previousState.map(object => (
           object.name === item.name ?
-          {
-            ...object,
-            quantity: object.quantity + 1
-          } :
-          object
+            {
+              ...object,
+              quantity: object.quantity + 1
+            } :
+            object
         ))
       } else {
         // If item isn't inside cart, add the item with quantity: 1
