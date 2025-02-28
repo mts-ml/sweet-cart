@@ -1,5 +1,5 @@
 import { Item } from './components/Item/Item'
-import Cart from './components/Cart/Cart'
+import { Cart } from './components/Cart/Cart'
 import data from '../data.json'
 import { useState } from 'react'
 import { nanoid } from 'nanoid'

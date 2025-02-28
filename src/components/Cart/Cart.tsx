@@ -3,25 +3,27 @@ import x from '../../../public/assets/images/icon-remove-item.svg'
 import emptyCartImg from '../../../public/assets/images/illustration-empty-cart.svg'
 import check from '../../../public/assets/images/icon-order-confirmed.svg'
 import { nanoid } from 'nanoid'
-import PropTypes from 'prop-types'
 import React, { useState } from 'react'
+import { ProductOnCart } from '../../App'
 
 import './cartStyle.scss'
 
-Cart.propTypes = {
-  cart: PropTypes.array.isRequired,
-  setCart: PropTypes.func.isRequired
+
+interface CartProps {
+  cart: ProductOnCart[]
+  setCart: React.Dispatch<React.SetStateAction<ProductOnCart[]>>
 }
 
 
-export default function Cart(props) {
-  const [showSection, setShowSection] = useState(false)
+export const Cart: React.FC<CartProps> = (props) => {
+  const [showSection, setShowSection] = useState<boolean>(false)
 
-  const confirmOrderCart = props.cart.map(item => {
-    const itemTotal = item.price * item.quantity
+  const confirmOrderCart: JSX.Element[] = props.cart.map( (item: ProductOnCart) => {
+    const itemTotal: number = item.price * item.quantity
+
     return (
       <div key={nanoid()} className="container">
-        <img src={item.image.thumbnail} alt="" />
+        <img src={item.image.thumbnail} alt={`Image of ${item.name}`} />
 
         <div className="confirm_order__wrapper">
           <h4 className="confirm_order__name">{item.name}</h4>
@@ -38,8 +40,9 @@ export default function Cart(props) {
     )
   })
 
-  const itemsInCart = props.cart.map(item => {
-    const itemTotal = item.price * item.quantity
+  const itemsInCart: JSX.Element[] = props.cart.map( (item: ProductOnCart) => {
+    const itemTotal: number = item.price * item.quantity
+
     return (
       <React.Fragment key={nanoid()}>
         <div className="cart__products">
@@ -67,11 +70,11 @@ export default function Cart(props) {
     )
   })
 
-  function removeItem(itemId) {
-    props.setCart(previousState => previousState.filter(object => object.id !== itemId))
+  function removeItem(itemId: string): void {
+    props.setCart( (previousState: ProductOnCart[]) => previousState.filter( (object: ProductOnCart) => object.id !== itemId))
   }
 
-  const totalBill = props.cart.reduce((acumulator, product) => (
+  const totalBill: number = props.cart.reduce((acumulator: number, product: ProductOnCart) => (
     product.price * product.quantity + acumulator
   ), 0)
 
@@ -81,7 +84,7 @@ export default function Cart(props) {
     const start = window.pageYOffset;
     const startTime = performance.now();
 
-    function scrollStep(timestamp) {
+    function scrollStep(timestamp: number) {
       const currentTime = timestamp - startTime;
       const progress = Math.min(currentTime / duration, 1);
 
