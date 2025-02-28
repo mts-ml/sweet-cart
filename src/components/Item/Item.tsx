@@ -2,24 +2,21 @@ import cartImg from '../../../public/assets/images/icon-add-to-cart.svg'
 import PropTypes from 'prop-types'
 import decrement from '../../../public/assets/images/icon-decrement-quantity.svg'
 import increment from '../../../public/assets/images/icon-increment-quantity.svg'
+import { ProductOnCart } from '../../App'
 import clsx from "clsx"
 
 import './itemStyle.scss'
 
 
-Item.propTypes = {
-   image: PropTypes.object.isRequired,
-   name: PropTypes.string.isRequired,
-   category: PropTypes.string.isRequired,
-   price: PropTypes.number.isRequired,
-   addToCart: PropTypes.func.isRequired,
-   cart: PropTypes.array.isRequired,
-   setCart: PropTypes.func.isRequired,
+interface ItemProps extends ProductOnCart {
+   addToCart: () => void
+   cart: ProductOnCart[]
+   setCart: React.Dispatch<React.SetStateAction<ProductOnCart[]>>
 }
 
 
-export default function Item(props) {
-   const itemInCart = props.cart.find(object => object.name === props.name)
+export const Item: React.FC<ItemProps> = (props) => {
+   const itemInCart: ProductOnCart | undefined = props.cart.find(object => object.name === props.name)
 
    const classname = clsx({
       product__btn: !itemInCart,
@@ -27,9 +24,9 @@ export default function Item(props) {
    })
 
    // Just for observation, in the decrementCount I didn't use () after setCart and map on the incrementCount I did.
-   function decrementCount(itemInCart) {
-      props.setCart(prevState => 
-         prevState.map(object => 
+   function decrementCount(itemInCart: ProductOnCart): void {
+      props.setCart((prevState: ProductOnCart[]) =>
+         prevState.map((object: ProductOnCart) =>
             object.name === itemInCart.name ?
                {
                   ...object,
@@ -41,9 +38,9 @@ export default function Item(props) {
       )
    }
 
-   function incrementCount(itemInCart) {
-      props.setCart(prevState => (
-         prevState.map(object => (
+   function incrementCount(itemInCart: ProductOnCart): void {
+      props.setCart((prevState: ProductOnCart[]) => (
+         prevState.map((object: ProductOnCart) => (
             object.name === itemInCart.name ?
                {
                   ...object,
@@ -60,7 +57,10 @@ export default function Item(props) {
          <picture>
             <source media="(min-width: 1200px)" srcSet={props.image.desktop} />
             <source media="(min-width: 768px)" srcSet={props.image.tablet} />
-            <img className={`product__img ${itemInCart ? 'imgRed' : ''}`} src={props.image.mobile} alt={`Image of ${props.name}`} />
+            <img className={`product__img ${itemInCart ? 'imgRed' : ''}`}
+               src={props.image.mobile}
+               alt={`Image of ${props.name}`}
+            />
          </picture>
 
          <span className="product__abreviation">{props.category}</span>
@@ -74,14 +74,14 @@ export default function Item(props) {
                <button className={classname}>
                   <div>
                      <img
-                     className='product__count_img'
+                        className='product__count_img'
                         src={decrement}
                         alt="Icon of '-' representing decrement."
                         onClick={() => decrementCount(itemInCart)}
                      />
                      {itemInCart.quantity}
                      <img
-                     className='product__count_img'
+                        className='product__count_img'
                         src={increment}
                         alt="Icon of '+' representing increment."
                         onClick={() => incrementCount(itemInCart)}
