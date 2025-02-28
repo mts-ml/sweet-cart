@@ -1,4 +1,4 @@
-import Item from './components/Item/Item'
+import { Item } from './components/Item/Item'
 import Cart from './components/Cart/Cart'
 import data from '../data.json'
 import { useState } from 'react'
@@ -21,7 +21,7 @@ interface Product {
   price: number
 }
 
-interface ProductOnCart extends Product {
+export interface ProductOnCart extends Product {
   id: string
   quantity: number
 }
