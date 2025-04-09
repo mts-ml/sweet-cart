@@ -27,7 +27,7 @@ Users should be able to:
 
 ### Links
 
-- [Preview Site](https://mts-ml.github.io/product-list-with-cart/)
+- [Preview Site](https://mts-ml.github.io/https://github.com/mts-ml/sweet-cart/)
 
 
 ### Built with
